@@ -271,7 +271,7 @@
                             </div>
                         </div>
                         
-                        <div class="form-group">
+                        <div class="form-group court-option">
                             <label>Go to court instead of settling?</label>
                             <div class="radio-group">
                                 <label><input type="radio" name="goToCourt" value="yes"> Yes</label>
@@ -291,6 +291,16 @@
                         <div class="result-row">
                             <div class="result-label">Plaintiffs EV:</div>
                             <div class="result-value" id="plaintiff-ev">$0</div>
+                        </div>
+                        <div class="result-row">
+                            <div class="result-label">Lawyer's EV:</div>
+                            <div class="result-value" id="lawyer-ev">$0</div>
+                        </div>
+                        <div class="result-row lawyer-incentivized" style="background-color: #e8f8e8; display: none;">
+                            <div class="result-label">✓ Lawyer is incentivized to settle</div>
+                        </div>
+                        <div class="result-row lawyer-not-incentivized" style="background-color: #f8e8e8; display: none;">
+                            <div class="result-label">✗ Lawyer prefers to go to trial</div>
                         </div>
                         <div class="total-cost">
                             <div class="result-label">Total Settlement Cost:</div>

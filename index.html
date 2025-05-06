@@ -15,6 +15,7 @@
                 <button class="tab-button" data-tab="counterpart-info">Counterpart Info</button>
                 <button class="tab-button" data-tab="ev-analysis">EV Analysis</button>
                 <button class="tab-button" data-tab="tactics">Negotiation Tactics</button>
+                <button class="tab-button" data-tab="submit-deal">Submit Deal</button>
             </div>
             <div class="tab-content active" id="negotiation">
                 <div class="negotiation-scene">
@@ -148,6 +149,155 @@
                     <li>Third concession: Public statement acknowledging issue (not a full apology)</li>
                     <li>Final position: $300M compensation + full recall with loaners + public statement</li>
                 </ol>
+            </div>
+            
+            <div class="tab-content" id="submit-deal">
+                <h2>Submit Deal Terms</h2>
+                <p>Create a settlement proposal and see the expected value (EV) calculation for both parties.</p>
+                
+                <form id="deal-form">
+                    <div class="form-section">
+                        <h3>Core Settlement Terms</h3>
+                        
+                        <div class="form-group">
+                            <label>Will there be a recall (i.e. settlement)?</label>
+                            <div class="radio-group">
+                                <label><input type="radio" name="recall" value="yes" checked> Yes</label>
+                                <label><input type="radio" name="recall" value="no"> No</label>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Will Payne Motors pay for the replacement pawls?</label>
+                            <div class="radio-group">
+                                <label><input type="radio" name="payForPawls" value="yes" checked> Yes</label>
+                                <label><input type="radio" name="payForPawls" value="no"> No</label>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Will Payne Motors provide loaner vehicles?</label>
+                            <div class="radio-group">
+                                <label><input type="radio" name="loanerVehicles" value="yes"> Yes</label>
+                                <label><input type="radio" name="loanerVehicles" value="no" checked> No</label>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group loaner-days" style="display: none;">
+                            <label>For up to how many days maximum:</label>
+                            <input type="number" name="loanerDays" min="1" max="60" value="7">
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h3>Compensation</h3>
+                        
+                        <div class="form-group">
+                            <label>Dollar compensation to each owner with faulty pawls ($):</label>
+                            <input type="number" name="compensationPerOwner" min="0" value="0">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Dollar compensation to each owner involved in accidents ($):</label>
+                            <input type="number" name="compensationPerAccident" min="0" value="0">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Will there be a third-party evaluator of accident claims?</label>
+                            <div class="radio-group">
+                                <label><input type="radio" name="thirdPartyEvaluator" value="yes"> Yes</label>
+                                <label><input type="radio" name="thirdPartyEvaluator" value="no" checked> No</label>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group evaluator-cost" style="display: none;">
+                            <label>Cost per evaluation ($):</label>
+                            <input type="number" name="evaluatorCost" min="0" value="500">
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h3>Public Relations</h3>
+                        
+                        <div class="form-group">
+                            <label>Will Payne Motors issue a public statement?</label>
+                            <div class="radio-group">
+                                <label><input type="radio" name="publicStatement" value="yes"> Yes</label>
+                                <label><input type="radio" name="publicStatement" value="no" checked> No</label>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group apology-option" style="display: none;">
+                            <label>Will Payne Motors apologize in the statement?</label>
+                            <div class="radio-group">
+                                <label><input type="radio" name="apology" value="yes"> Yes</label>
+                                <label><input type="radio" name="apology" value="no" checked> No</label>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Will Parker comment favorably on the statement with media and clients?</label>
+                            <div class="radio-group">
+                                <label><input type="radio" name="favorableComment" value="yes"> Yes</label>
+                                <label><input type="radio" name="favorableComment" value="no" checked> No</label>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Will Parker state that the Hydra rolling backwards and causing the wildfire was not Payne Motors' fault?</label>
+                            <div class="radio-group">
+                                <label><input type="radio" name="wildfireStatement" value="yes"> Yes</label>
+                                <label><input type="radio" name="wildfireStatement" value="no" checked> No</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h3>Future Commitments</h3>
+                        
+                        <div class="form-group">
+                            <label>Will Payne Motors commit to using third-party product safety regulators for the next 3 years?</label>
+                            <div class="radio-group">
+                                <label><input type="radio" name="safetyRegulators" value="yes"> Yes</label>
+                                <label><input type="radio" name="safetyRegulators" value="no" checked> No</label>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Will class-action members waive future claims relating to pawl defects after settlement?</label>
+                            <div class="radio-group">
+                                <label><input type="radio" name="waiveFutureClaims" value="yes"> Yes</label>
+                                <label><input type="radio" name="waiveFutureClaims" value="no" checked> No</label>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Go to court instead of settling?</label>
+                            <div class="radio-group">
+                                <label><input type="radio" name="goToCourt" value="yes"> Yes</label>
+                                <label><input type="radio" name="goToCourt" value="no" checked> No</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button type="button" id="calculate-ev" class="calculate-button">Calculate Expected Value</button>
+                    
+                    <div id="ev-results" class="results-container" style="display: none;">
+                        <h3>Expected Value (EV) Results</h3>
+                        <div class="result-row">
+                            <div class="result-label">Payne Motors EV:</div>
+                            <div class="result-value" id="payne-ev">$0</div>
+                        </div>
+                        <div class="result-row">
+                            <div class="result-label">Plaintiffs EV:</div>
+                            <div class="result-value" id="plaintiff-ev">$0</div>
+                        </div>
+                        <div class="total-cost">
+                            <div class="result-label">Total Settlement Cost:</div>
+                            <div class="result-value" id="total-cost">$0</div>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

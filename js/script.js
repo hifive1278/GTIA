@@ -64,7 +64,7 @@ const negotiationScenario = [
         choices: [
             { text: "We could increase the compensation fund to $100 million but distribute it based on verified damages. Those with documented incidents would receive more.", nextScene: 16 },
             { text: "What if we offer loaner vehicles during repairs for all affected customers in addition to the compensation fund?", nextScene: 17 },
-            { text: "Your clients' demands are outrageous. Our BATNA is to fight this in court where our legal team believes we'd only pay $10-15 million at most. $50 million is our final offer.", nextScene: "failure" }
+            { text: "Your clients' demands are outrageous. Our BATNA is to fight this in court where our legal team believes we'd only pay $51 million at most. $50 million is our final offer.", nextScene: "failure" }
         ]
     },
     // Scene 6: Modest compensation response
@@ -574,11 +574,9 @@ function initializeDealCalculator() {
     
     // DOM elements for the deal calculator
     const recallRadios = document.querySelectorAll('input[name="recall"]');
-    const goToCourtRadios = document.querySelectorAll('input[name="goToCourt"]');
     const loanerVehiclesRadios = document.querySelectorAll('input[name="loanerVehicles"]');
     const loanerDaysField = document.querySelector('.loaner-days');
     const thirdPartyEvaluatorRadios = document.querySelectorAll('input[name="thirdPartyEvaluator"]');
-    const evaluatorCostField = document.querySelector('.evaluator-cost');
     const publicStatementRadios = document.querySelectorAll('input[name="publicStatement"]');
     const apologyOption = document.querySelector('.apology-option');
     const calculateButton = document.getElementById('calculate-ev');
@@ -668,30 +666,6 @@ function initializeDealCalculator() {
         radio.addEventListener('change', () => {
             const isSettlement = radio.value === 'yes';
             toggleFormFields(isSettlement);
-            
-            // If "No" is selected for recall, auto-select "Yes" for going to court
-            if (!isSettlement) {
-                const goToCourtYesRadio = document.querySelector('input[name="goToCourt"][value="yes"]');
-                if (goToCourtYesRadio) {
-                    goToCourtYesRadio.checked = true;
-                }
-            }
-        });
-    });
-    
-    // Add event listeners to goToCourt radios
-    goToCourtRadios.forEach(radio => {
-        radio.addEventListener('change', () => {
-            const goingToCourt = radio.value === 'yes';
-            
-            // If "Yes" is selected for going to court, auto-select "No" for recall
-            if (goingToCourt) {
-                const recallNoRadio = document.querySelector('input[name="recall"][value="no"]');
-                if (recallNoRadio) {
-                    recallNoRadio.checked = true;
-                    toggleFormFields(false);
-                }
-            }
         });
     });
     
@@ -699,12 +673,6 @@ function initializeDealCalculator() {
     loanerVehiclesRadios.forEach(radio => {
         radio.addEventListener('change', () => {
             loanerDaysField.style.display = radio.value === 'yes' ? 'block' : 'none';
-        });
-    });
-    
-    thirdPartyEvaluatorRadios.forEach(radio => {
-        radio.addEventListener('change', () => {
-            evaluatorCostField.style.display = radio.value === 'yes' ? 'block' : 'none';
         });
     });
     
@@ -735,14 +703,12 @@ function calculateExpectedValues() {
         compensationPerOwner: parseInt(document.querySelector('input[name="compensationPerOwner"]').value) || 0,
         compensationPerAccident: parseInt(document.querySelector('input[name="compensationPerAccident"]').value) || 0,
         thirdPartyEvaluator: document.querySelector('input[name="thirdPartyEvaluator"]:checked').value === 'yes',
-        evaluatorCost: parseInt(document.querySelector('input[name="evaluatorCost"]').value) || 500,
         publicStatement: document.querySelector('input[name="publicStatement"]:checked').value === 'yes',
         apology: document.querySelector('input[name="apology"]:checked').value === 'yes',
         favorableComment: document.querySelector('input[name="favorableComment"]:checked').value === 'yes',
         wildfireStatement: document.querySelector('input[name="wildfireStatement"]:checked').value === 'yes',
         safetyRegulators: document.querySelector('input[name="safetyRegulators"]:checked').value === 'yes',
         waiveFutureClaims: document.querySelector('input[name="waiveFutureClaims"]:checked').value === 'yes',
-        goToCourt: document.querySelector('input[name="goToCourt"]:checked').value === 'yes'
     };
     
     console.log('Form data:', formData);
@@ -750,11 +716,13 @@ function calculateExpectedValues() {
     // Define constants from the case
     const totalHydras = 1000000;
     const defectiveHydras = 100000;
-    const accidentHydras = 111100;
-    const recallCostPerVehicle = 140; // $140 per vehicle ($40 parts + $100 labor)
+    let accidentHydras = 111100;
+    const recallCostPerDefectiveVehicle = 140; // $140 per vehicle ($40 parts + $100 labor)
+    const recallCostPerFunctionalVehicle = 30; // $50 per vehicle ($0 parts + $30 labor)
     const baseLoanerCostPerDay = 50; // $50 per vehicle per day
     const courtCostPayneMotors = 900000000; // $900M if going to court
     const prDamageCost = 100000000; // $100M estimated PR damage cost
+    const costPerEvaluation = 500; // $500 for third party to investigate 1 accident claim
     
     // Lawyer's parameters
     const lawyerFeePercentage = 0.30; // 30% of settlement or judgment
@@ -766,105 +734,167 @@ function calculateExpectedValues() {
     let payneEV = 0;
     let lawyerEV = 0;
     
-    // If going to court, use the expected court outcomes
-    if (formData.goToCourt) {
-        // Expected court outcomes based on lawyer's win probability
-        const expectedCourtOutcome = courtCostPayneMotors * lawyerWinProbability;
+    if (formData.recall) {
+        const recallCost = formData.payForPawls ? (totalHydras-defectiveHydras) * recallCostPerFunctionalVehicle + defectiveHydras * recallCostPerDefectiveVehicle : 0;
+        totalCost += recallCost;
+        payneEV -= recallCost;
+        plaintiffEV += recallCost;
+        lawyerEV += recallCost * 0.2; // makes him look good
         
-        payneEV = -(expectedCourtOutcome) - prDamageCost; // Court cost + PR damage
+        // Loaner vehicle costs
+        if (formData.loanerVehicles) {
+            const loanerCost = defectiveHydras * baseLoanerCostPerDay * formData.loanerDays;
+            totalCost += loanerCost;
+            payneEV -= loanerCost;
+            plaintiffEV += loanerCost;
+            lawyerEV += loanerCost * 0.2; // makes him look good
+        }
+
+         // Third-party evaluator costs
+         if (formData.thirdPartyEvaluator) {
+            const evaluatorTotalCost = accidentHydras * costPerEvaluation;
+            totalCost += evaluatorTotalCost;
+            payneEV -= evaluatorTotalCost;
+            accidentHydras *= 0.2; // cut 80%, the unrelated accidents, out
+        }
         
-        // Lawyer's cut is 30% of the court outcome
-        lawyerEV = expectedCourtOutcome * lawyerFeePercentage;
+        // Compensation costs
+        const ownerCompensation = defectiveHydras * formData.compensationPerOwner;
+        const accidentCompensation = accidentHydras * formData.compensationPerAccident;
+        const totalCompensation = ownerCompensation + accidentCompensation;
+        totalCost += totalCompensation;
+        payneEV -= totalCompensation;
+        lawyerEV = totalCompensation * lawyerFeePercentage; // Lawyer gets 30% of the monetary compensation
+        plaintiffEV = totalCompensation * (1 - lawyerFeePercentage); // Plaintiffs get the remaining 70% of the compensation
         
-        // Plaintiffs get the remaining 70% of the expected court outcome
-        plaintiffEV = expectedCourtOutcome * (1 - lawyerFeePercentage);
-        
-        totalCost = expectedCourtOutcome;
-    } else {
-        // Calculate recall costs
-        if (formData.recall) {
-            const recallCost = formData.payForPawls ? totalHydras * recallCostPerVehicle : 0;
-            totalCost += recallCost;
-            payneEV -= recallCost;
-            
-            // Loaner vehicle costs
-            if (formData.loanerVehicles) {
-                const loanerCost = totalHydras * baseLoanerCostPerDay * formData.loanerDays;
-                totalCost += loanerCost;
-                payneEV -= loanerCost;
-            }
-            
-            // Compensation costs
-            const ownerCompensation = defectiveHydras * formData.compensationPerOwner;
-            const accidentCompensation = accidentHydras * formData.compensationPerAccident;
-            const totalCompensation = ownerCompensation + accidentCompensation;
-            
-            totalCost += totalCompensation;
-            payneEV -= totalCompensation;
-            
-            // Lawyer gets 30% of the monetary compensation
-            lawyerEV = totalCompensation * lawyerFeePercentage;
-            
-            // Plaintiffs get the remaining 70% of the compensation
-            plaintiffEV = totalCompensation * (1 - lawyerFeePercentage);
-            
-            // Third-party evaluator costs
-            if (formData.thirdPartyEvaluator) {
-                const evaluatorTotalCost = (accidentHydras + defectiveHydras) * formData.evaluatorCost;
-                totalCost += evaluatorTotalCost;
-                payneEV -= evaluatorTotalCost;
-            }
-            
-            // PR impact
-            if (formData.publicStatement) {
-                const prCostReduction = formData.apology ? 0.7 : 0.4; // 70% or 40% reduction in PR damage
-                payneEV += prDamageCost * prCostReduction;
-            }
-            
-            // Favorable comments by Parker
-            if (formData.favorableComment) {
-                payneEV += prDamageCost * 0.3; // 30% additional PR damage reduction
-            }
-            
-            // Wildfire statement
-            if (formData.wildfireStatement) {
-                payneEV += prDamageCost * 0.2; // 20% additional PR damage reduction
-            }
-            
-            // Future claim waivers
-            if (formData.waiveFutureClaims) {
-                payneEV += 100000000; // $100M saved in potential future claims
+        // PR impact
+        if (formData.publicStatement) {
+            let prCostReduction = 0;
+            if (formData.apology) {
+                prCostReduction = formData.favorableComment ? 0.1 : 0.5; 
+                lawyerEV += 8000000; // really benefits from forcing public apology
             } else {
-                payneEV -= 50000000; // $50M potential future liability
+                prCostReduction = 0.7; // without favorable comment, actually worse to apologize
             }
-            
-            // Safety regulator commitment
-            if (formData.safetyRegulators) {
-                payneEV -= 20000000; // $20M cost of regulators
-                plaintiffEV += 10000000; // $10M value to plaintiffs for increased safety
-            }
+            payneEV -= prDamageCost * prCostReduction;
+            lawyerEV += 2000000; // benefits from forcing any public statement
+            plaintiffEV += 10000000; // benefit from hearing about pawls through statement (maybe they missed direct comms)
+        }
+        
+        // Favorable comments by Parker
+        if (formData.favorableComment) {
+            lawyerEV += 3000000; // he can say he got a good settlement and seem like a trustworthy negotiation partner
+        }
+        
+        // Wildfire statement (not integrative)
+        if (formData.wildfireStatement) {
+            payneEV += 30000000; // really good for making them look better (though not off the hook entirely)
+            lawyerEV -= 100000000; // VERY bad for case and reputation
+        }
+        
+        // Future claim waivers (integrative between lawyer and payne)
+        if (formData.waiveFutureClaims) {
+            payneEV += 100000000; // $100M saved in potential future claims
+            lawyerEV -= 30000000; // loses out on $30M future claims
+            plaintiffEV -= 70000000; // loses out on $70M future
+        } 
+        
+        // Safety regulator commitment (not integrative)
+        if (formData.safetyRegulators) {
+            payneEV -= 20000000; // $20M cost of regulators
+            plaintiffEV += 10000000; // $10M value to plaintiffs for increased safety
+            lawyerEV += 5000000; // looks good to clients
         }
     }
-    
-    // Calculate lawyer's expected value from going to trial instead
-    const trialLawyerEV = courtCostPayneMotors * lawyerFeePercentage * lawyerWinProbability;
-    
+    else {        
+        payneEV = -(courtCostPayneMotors) - prDamageCost; // Court cost + PR damage
+        
+        // Lawyer's cut is 30% of the court outcome
+        lawyerEV = courtCostPayneMotors * lawyerFeePercentage * lawyerWinProbability;
+        
+        // Plaintiffs get the remaining 70% of the expected court outcome
+        plaintiffEV = courtCostPayneMotors * lawyerWinProbability * (1 - lawyerFeePercentage);
+        
+        totalCost = courtCostPayneMotors;
+    }
+        
     // Display the results
     document.getElementById('payne-ev').textContent = formatCurrency(payneEV);
     document.getElementById('plaintiff-ev').textContent = formatCurrency(plaintiffEV);
     document.getElementById('lawyer-ev').textContent = formatCurrency(lawyerEV);
     document.getElementById('total-cost').textContent = formatCurrency(totalCost);
-    
-    // Determine if lawyer is incentivized to settle
+
+    // So we can soon update preference display
+    const payneIncentivized = document.querySelector('.payne-incentivized');
+    const payneNotIncentivized = document.querySelector('.payne-not-incentivized');
     const lawyerIncentivized = document.querySelector('.lawyer-incentivized');
     const lawyerNotIncentivized = document.querySelector('.lawyer-not-incentivized');
-    
-    if (lawyerEV >= trialLawyerEV) {
-        lawyerIncentivized.style.display = 'flex';
-        lawyerNotIncentivized.style.display = 'none';
-    } else {
+        
+    // Calculate lawyer's expected value from going to trial instead
+    const trialLawyerEV = courtCostPayneMotors * lawyerFeePercentage * lawyerWinProbability;
+    const lawyerPrefersTrial = lawyerEV < trialLawyerEV;
+
+    // Calculate if Payne Motors prefers to go to trial
+    const payneTrialEV = -courtCostPayneMotors - prDamageCost;
+    const paynePrefersTrial = payneEV < payneTrialEV;
+
+    const lawyerNotIncentivizedLabel = document.querySelector('.lawyer-not-incentivized-label');
+    const payneNotIncentivizedLabel = document.querySelector('.payne-not-incentivized-label');
+
+    if (!formData.recall) {
+        // No settlement: always show X and red for both
+        lawyerNotIncentivizedLabel.textContent = "✗ Lawyer prefers not to go to trial";
+        payneNotIncentivizedLabel.textContent = "✗ Payne Motors prefers not to go to trial";
+
         lawyerIncentivized.style.display = 'none';
         lawyerNotIncentivized.style.display = 'flex';
+        payneIncentivized.style.display = 'none';
+        payneNotIncentivized.style.display = 'flex';
+        
+    } else {
+        if (!lawyerPrefersTrial) {
+            lawyerIncentivized.style.display = 'flex';
+            lawyerNotIncentivized.style.display = 'none';
+        } else {
+            lawyerIncentivized.style.display = 'none';
+            lawyerNotIncentivized.style.display = 'flex';
+        }
+        
+        if (!paynePrefersTrial) {
+            payneIncentivized.style.display = 'flex';
+            payneNotIncentivized.style.display = 'none';
+        } else {
+            payneIncentivized.style.display = 'none';
+            payneNotIncentivized.style.display = 'flex';
+        }
+    }
+
+    // Update settlement summary
+    const settlementSummary = document.querySelector('.settlement-summary');
+    const settlementStatus = document.getElementById('settlement-status');
+    
+    if (paynePrefersTrial || lawyerPrefersTrial) {
+        settlementSummary.style.display = 'flex';
+        
+        if (paynePrefersTrial && lawyerPrefersTrial) {
+            settlementStatus.textContent = "Both parties prefer to go to trial";
+            settlementStatus.style.color = "#d94e4e";
+        } else if (paynePrefersTrial) {
+            settlementStatus.textContent = "Payne Motors prefers trial";
+            settlementStatus.style.color = "#d9994e";
+        } else {
+            settlementStatus.textContent = "The lawyer prefers trial";
+            settlementStatus.style.color = "#d9994e";
+        }
+    } else {
+        settlementSummary.style.display = 'flex';
+        settlementStatus.textContent = "Both parties prefer to settle";
+        if (formData.recall){
+            settlementStatus.style.color = "#4ed94e";    
+        } else {
+            settlementStatus.style.color = "#d94e4e";
+        }
+        
     }
     
     // Show the results container

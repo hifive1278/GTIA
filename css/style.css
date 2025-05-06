@@ -418,6 +418,15 @@ input[type="number"] {
     justify-content: center;
 }
 
+.payne-incentivized, .payne-not-incentivized {
+    font-weight: bold;
+    padding: 12px;
+    border-radius: 5px;
+    margin: 15px 0;
+    text-align: center;
+    justify-content: center;
+}
+
 .disabled-section {
     opacity: 0.6;
     pointer-events: none;

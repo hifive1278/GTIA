@@ -1,0 +1,326 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+}
+
+.game-container {
+    max-width: 900px;
+    margin: 20px auto;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+/* Tab Navigation */
+.tabs {
+    display: flex;
+    background-color: #3498db;
+}
+
+.tab-button {
+    padding: 15px 20px;
+    border: none;
+    background: none;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    flex-grow: 1;
+    transition: background-color 0.3s;
+    position: relative;
+    outline: none;
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
+    box-shadow: inset 0 -3px 0 rgba(0,0,0,0.2);
+}
+
+.tab-button:hover {
+    background-color: #2980b9;
+}
+
+.tab-button.active {
+    background-color: #2980b9;
+    font-weight: bold;
+    box-shadow: inset 0 -3px 0 #fff;
+}
+
+.tab-button:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background-color: transparent;
+    transition: background-color 0.3s;
+}
+
+/* Tab Content */
+.tab-content {
+    display: none;
+    padding: 20px;
+    height: 750px;
+    overflow-y: auto;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* Negotiation Scene */
+.negotiation-scene {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.characters {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    height: 450px;
+}
+
+.character {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 48%;
+}
+
+.character-avatar {
+    width: 150px;
+    height: 200px;
+    background-color: #f39c12;
+    border-radius: 50% 50% 40% 40%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.player .character-avatar {
+    background-color: #2ecc71;
+}
+
+.mouth {
+    width: 60px;
+    height: 20px;
+    background-color: #333;
+    border-radius: 0 0 30px 30px;
+    position: absolute;
+    bottom: 50px;
+    transition: height 0.2s;
+}
+
+.talking .mouth {
+    height: 40px;
+    animation: talk 0.3s infinite alternate;
+}
+
+@keyframes talk {
+    from { height: 20px; }
+    to { height: 40px; }
+}
+
+/* Speech Bubbles */
+.speech-bubble {
+    position: relative;
+    background-color: #f1f1f1;
+    border-radius: 10px;
+    padding: 18px;
+    max-width: 100%;
+    min-height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
+}
+
+.speech-bubble:before {
+    content: '';
+    position: absolute;
+    top: -20px;
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 20px solid #f1f1f1;
+}
+
+.player-bubble:before {
+    left: 20%;
+}
+
+.counterpart-bubble:before {
+    right: 20%;
+}
+
+.dialogue {
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+/* Choices */
+.choices-container {
+    margin-top: auto;
+    padding: 25px;
+    background-color: #eaeaea;
+    border-radius: 10px;
+    min-height: 220px;
+}
+
+.choices {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.choice-button {
+    padding: 15px 20px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-align: left;
+    font-size: 16px;
+    font-weight: bold;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 12px;
+    position: relative;
+    overflow: hidden;
+}
+
+.choice-button:hover {
+    background-color: #2980b9;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+.choice-button:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.choice-button:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background-color: #fff;
+    opacity: 0.3;
+}
+
+/* Info tabs styling */
+#your-goals, #counterpart-info, #ev-analysis, #tactics {
+    line-height: 1.6;
+}
+
+#your-goals h2, #counterpart-info h2, #ev-analysis h2, #tactics h2 {
+    margin-bottom: 20px;
+    color: #2c3e50;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 10px;
+}
+
+#your-goals h3, #counterpart-info h3, #ev-analysis h3, #tactics h3 {
+    margin: 20px 0 10px;
+    color: #2c3e50;
+}
+
+#your-goals ul, #counterpart-info ul, #ev-analysis ul, #tactics ul, #tactics ol {
+    margin-left: 20px;
+    margin-bottom: 20px;
+}
+
+#your-goals li, #counterpart-info li, #ev-analysis li, #tactics li {
+    margin-bottom: 8px;
+}
+
+/* EV Analysis and ZOPA Visualization */
+.ev-calculation {
+    background-color: #f8f9fa;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 15px;
+    margin: 15px 0;
+}
+
+.zopa-visualization {
+    position: relative;
+    margin: 40px 0;
+    height: 100px;
+}
+
+.zopa-line {
+    position: absolute;
+    height: 4px;
+    background-color: #3498db;
+    width: 100%;
+    top: 50px;
+}
+
+.zopa-scale {
+    position: relative;
+    height: 100px;
+    width: 100%;
+}
+
+.zopa-marker {
+    position: absolute;
+    width: 80px;
+    text-align: center;
+    font-size: 12px;
+    transform: translateX(-50%);
+}
+
+.zopa-marker:after {
+    content: '';
+    position: absolute;
+    height: 15px;
+    width: 2px;
+    background-color: #3498db;
+    bottom: -20px;
+    left: 50%;
+}
+
+.zopa-zone {
+    position: absolute;
+    height: 20px;
+    background-color: rgba(52, 152, 219, 0.3);
+    top: 40px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .characters {
+        flex-direction: column;
+        height: auto;
+    }
+    
+    .character {
+        width: 100%;
+        margin-bottom: 30px;
+    }
+    
+    .tabs {
+        flex-wrap: wrap;
+    }
+    
+    .tab-button {
+        flex: 1 0 50%;
+    }
+}

@@ -23,7 +23,7 @@ const negotiationScenario = [
         text: "Our calculations are based on the number of accidents involving Hydras and the estimated number of vehicles with defective pawls. Each accident victim deserves $20,000, and each owner with defective pawls should receive $10,000.",
         choices: [
             { text: "I appreciate the detailed breakdown. However, we need to establish causation between pawls and accidents before discussing compensation amounts.", nextScene: 4 },
-            { text: "We'd like to propose a more reasonable approach: a targeted recall program plus a $50 million compensation fund for verified damages.", nextScene: 5 },
+            { text: "We'd like to propose a more reasonable approach: a targeted recall program plus a $30 million compensation fund for verified damages.", nextScene: 5 },
             { text: "We recognize the need for some compensation, but these figures are inflated. We'd propose a more modest compensation structure based on actual damages.", nextScene: 6 }
         ]
     },
@@ -57,14 +57,14 @@ const negotiationScenario = [
             { text: "We propose a $150 million compensation fund with a structured claims process overseen by an independent administrator.", nextScene: 15 }
         ]
     },
-    // Scene 5: $50M proposal response
+    // Scene 5: $30M proposal response
     {
         speaker: "counterpart",
-        text: "A $50 million fund is entirely insufficient. That's less than 2% of our claim. My clients have suffered real damages, and they deserve fair compensation. I'm willing to discuss the structure, but not such a low amount.",
+        text: "A $30 million fund is entirely insufficient. That's less than 1% of our claim. My clients have suffered real damages, and they deserve fair compensation. I'm willing to discuss the structure, but not such a low amount.",
         choices: [
             { text: "We could increase the compensation fund to $100 million but distribute it based on verified damages. Those with documented incidents would receive more.", nextScene: 16 },
             { text: "What if we offer loaner vehicles during repairs for all affected customers in addition to the compensation fund?", nextScene: 17 },
-            { text: "Your clients' demands are outrageous. Our BATNA is to fight this in court where our legal team believes we'd only pay $51 million at most. $50 million is our final offer.", nextScene: "failure" }
+            { text: "Your clients' demands are outrageous. Our BATNA is to fight this in court where our legal team believes we'd only pay $31 million at most. Now, $29 million is our final offer. Clock is ticking.", nextScene: "failure" }
         ]
     },
     // Scene 6: Modest compensation response
@@ -780,6 +780,10 @@ function calculateExpectedValues() {
             payneEV -= prDamageCost * prCostReduction;
             lawyerEV += 2000000; // benefits from forcing any public statement
             plaintiffEV += 10000000; // benefit from hearing about pawls through statement (maybe they missed direct comms)
+        } else {
+            payneEV += 20000000;
+            lawyerEV -= 30000000; 
+            plaintiffEV -= 50000000;
         }
         
         // Favorable comments by Parker
@@ -1004,14 +1008,14 @@ function createEVBreakdownTable(formData, trialPayneEV, trialPlaintiffEV, trialL
         // Calculate recall costs
         if (formData.payForPawls) {
             const recallCost = (totalHydras-defectiveHydras) * recallCostPerFunctionalVehicle + defectiveHydras * recallCostPerDefectiveVehicle;
-            addRow(tbody, 'Recall with pawl replacement', 
+            addRow(tbody, 'Recall with paid pawl replacement', 
                    formatCurrency(-recallCost), 
                    formatCurrency(recallCost), 
-                   formatCurrency(recallCost * 0.2));
+                   '$0');
         } else {
-            addRow(tbody, 'Recall without pawl replacement', 
-                   '$0', 
-                   '$0', 
+            addRow(tbody, 'Recall without paid pawl replacement', 
+                   formatCurrency(-105000000), // max penalties for illegal activity 
+                   formatCurrency(-recallCost), 
                    '$0');
         }
         
@@ -1061,13 +1065,13 @@ function createEVBreakdownTable(formData, trialPayneEV, trialPlaintiffEV, trialL
         if (formData.publicStatement) {
             let prCostReduction = 0;
             if (formData.apology) {
-                prCostReduction = formData.favorableComment ? 0.1 : 0.5;
+                prCostReduction = formData.favorableComment ? 0.1 : 0.7;
                 addRow(tbody, 'Public statement with apology', 
                        formatCurrency(-prDamageCost * prCostReduction), 
                        formatCurrency(10000000), 
                        formatCurrency(formData.favorableComment ? 8000000 + 2000000 : 8000000));
             } else {
-                prCostReduction = 0.7;
+                prCostReduction = 0.5;
                 addRow(tbody, 'Public statement without apology', 
                        formatCurrency(-prDamageCost * prCostReduction), 
                        formatCurrency(10000000), 
@@ -1076,12 +1080,12 @@ function createEVBreakdownTable(formData, trialPayneEV, trialPlaintiffEV, trialL
         }
         
         // Favorable comments
-        if (formData.favorableComment && !formData.publicStatement) {
-            addRow(tbody, 'Favorable comments by Parker', 
-                   '$0', 
-                   '$0', 
-                   formatCurrency(3000000));
-        }
+        // if (formData.favorableComment && !formData.publicStatement) {
+        //     addRow(tbody, 'Favorable comments by Parker', 
+        //            '$0', 
+        //            '$0', 
+        //            formatCurrency(3000000));
+        // }
         
         // Wildfire statement
         if (formData.wildfireStatement) {

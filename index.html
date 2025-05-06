@@ -11,10 +11,9 @@
         <div class="tabs-container">
             <div class="tabs">
                 <button class="tab-button active" data-tab="negotiation">Negotiation</button>
-                <button class="tab-button" data-tab="your-goals">Your Strategy</button>
                 <button class="tab-button" data-tab="counterpart-info">Counterpart Info</button>
                 <button class="tab-button" data-tab="ev-analysis">EV Analysis</button>
-                <button class="tab-button" data-tab="tactics">Negotiation Tactics</button>
+                <button class="tab-button" data-tab="tactics">Tactics & Strategy</button>
                 <button class="tab-button" data-tab="submit-deal">Submit Deal</button>
             </div>
             <div class="tab-content active" id="negotiation">
@@ -42,34 +41,6 @@
                     </div>
                 </div>
             </div>
-            <div class="tab-content" id="your-goals">
-                <h2>Payne Motors Negotiation Strategy</h2>
-                
-                <h3>Deal Terms (Elements of the Agreement)</h3>
-                <ul>
-                    <li>Recall scope and timing</li>
-                    <li>Compensation amounts for accidents</li>
-                    <li>Compensation for faulty pawl owners</li>
-                    <li>Provision of loaner vehicles</li>
-                    <li>Public statements and apologies</li>
-                </ul>
-                
-                <h3>BATNA (Best Alternative To Negotiated Agreement)</h3>
-                <p>Going to trial with potential costs of $900M-$1B+ and significant PR damage</p>
-                
-                <h3>Reserve Price</h3>
-                <p>Maximum of $500M total compensation plus recall costs</p>
-                
-                <h3>Aspirational Goal</h3>
-                <p>Complete the recall at company expense ($14M) with no additional compensation, only paying for the 100k cars with faulty pawl</p>
-                
-                <h3>Integration Opportunities</h3>
-                <ul>
-                    <li>Staggered recall schedule to minimize loaner costs</li>
-                    <li>Tiered compensation based on actual damages</li>
-                    <li>PR campaign highlighting company responsibility</li>
-                </ul>
-            </div>
             <div class="tab-content" id="counterpart-info">
                 <h2>Counterpart Information</h2>
                 <p><strong>Name:</strong> Davis Parker</p>
@@ -83,22 +54,42 @@
                     <li>$1B compensation for owners with faulty pawls ($10,000 each)</li>
                     <li>Formal apology from the board</li>
                 </ul>
-                <p><strong>BATNA:</strong> Extended trial with uncertain outcome, but potentially higher damages if successful</p>
-                <p><strong>Reserve Price:</strong> Estimated $300M minimum compensation plus full recall</p>
+                <p><strong>Can he be trusted?</strong> Hard to say, but we'll ask around with executives who have settled with Parker before. It will be important to establish trust during the negotiation, particularly if we end up relying on Parker to issue a favorable comment on our apology (we lose $60M if he doesn't). If we can get Parker to tone down the vitriol, we will have a better chance to dampening PR damages and maintaining customer satisfaction.</p>
             </div>
             <div class="tab-content" id="ev-analysis">
                 <h2>Expected Value Analysis</h2>
                 
-                <h3>Zone of Possible Agreement (ZOPA)</h3>
+                <h3>Zone of Possible Agreement (ZOPA)^</h3>
                 <div class="zopa-visualization">
                     <div class="zopa-scale">
-                        <div class="zopa-marker" style="left: 14%;">$14M<br>(PM Goal)</div>
+                        <div class="zopa-marker" style="left: 14%;">$31M<br>(PM Goal)</div>
                         <div class="zopa-zone" style="left: 30%; width: 20%;"></div>
                         <div class="zopa-marker" style="left: 30%;">$180M<br>(Parker RP)</div>
                         <div class="zopa-marker" style="left: 50%;">$1B<br>(PM RP)</div>
-                        <div class="zopa-marker" style="left: 90%;">$3.22B<br>(Parker Goal)</div>
+                        <div class="zopa-marker" style="left: 90%;">
+                            <div style="position: relative;">
+                              <span style="position: static; width: 100%; left: 0;">$984.6M<br>(Parker Goal)</span>
+                              <span style="position: absolute; top: 60px; width: 100%; left: 0;">$3.30B<br>(PM pays)</span>
+                            </div>
+                        </div>
                     </div>
                     <div class="zopa-line"></div>
+                </div>
+                <i>^Assuming Parker believes 75% of winning at trial</i>
+
+                <div class="ev-calculation">
+                    <ul>
+                        <li><strong>Payne Motors aspirational goal:</strong> $31M (they pay $140 per replacement of 100k faulty cars + $30 per inspection of other 900k cars + $10M PR damage - $20M no public statement; no other compensation) </li>
+                            <ul>
+                                <li><strong>Justification:</strong> There's no proven causation between any accidents and the pawls (2018-20 Hydras had typical complaint rates), and by settling in this way we are solving the situation quickly, quietly, and amicably.</li>
+                            </ul>
+                        <li><strong>Parker reservation price:</strong> $180M (30% commission from winning awards of $800M at trial with 75% probability) </li>
+                        <li><strong>Payne Motors reservation price:</strong> $1B ($900M spent on litigation expenses and outcome + $100M PR damage)</li>
+                        <li><strong>Parker aspirational goal:</strong> $984.6M (Parker's 30% cut of $3.22B compensation + secured loaner vehicles + public apology + safety regulator)</li>
+                            <ul>
+                                <li><strong>Justification:</strong> Meaningful compensation and future guarantees are necessary to undo Payne's reputational and actual damages from having put lives at risk.</li>
+                            </ul>
+                    </ul>
                 </div>
                 
                 <h3>Settlement EV Calculations</h3>
@@ -108,15 +99,15 @@
                     <h4>Key Constants in EV Calculations</h4>
                     <div class="ev-calculation">
                         <ul>
-                            <li>Total Hydra Vehicles: 1,000,000</li>
-                            <li>Vehicles with Defective Pawls: 100,000</li>
-                            <li>Vehicles with Reported Accidents: 111,100</li>
-                            <li>Recall Cost per Defective Vehicle: $140 ($40 parts + $100 labor)</li>
-                            <li>Recall Cost per Functional Vehicle: $30 (inspection only)</li>
-                            <li>Loaner Vehicle Cost: $50 per vehicle per day</li>
-                            <li>Court Cost if Going to Trial: $900M</li>
-                            <li>PR Damage Cost: $100M</li>
-                            <li>Third-Party Evaluation Cost: $500 per claim</li>
+                            <li><strong>Total Hydra Vehicles:</strong> 1,000,000</li>
+                            <li><strong>Vehicles with Defective Pawls:</strong> 100,000</li>
+                            <li><strong>Vehicles with Reported Accidents:</strong> 111,100</li>
+                            <li><strong>Recall Cost per Defective Vehicle:</strong> $140 ($40 parts + $100 labor)</li>
+                            <li><strong>Recall Cost per Functional Vehicle:</strong> $30 (inspection only)</li>
+                            <li><strong>Loaner Vehicle Cost:</strong> $50 per vehicle per day</li>
+                            <li><strong>Court Cost if Going to Trial:</strong> $900M</li>
+                            <li><strong>PR Damage Cost:</strong> $100M</li>
+                            <li><strong>Third-Party Evaluation Cost:</strong> $500 per claim</li>
                         </ul>
                     </div>
 
@@ -125,6 +116,9 @@
                         <p><strong>Settlement Scenario:</strong></p>
                         <ul>
                             <li>Recall Costs = (Total - Defective) × Functional Cost + Defective × Defective Cost</li>
+                                <ul>
+                                    <li>NOTE: acc. to 49 U.S. Code § 30165, maximum penalties of $105M can be imposed if manufacturer does not cover repair costs</li>
+                                </ul>
                             <li>Loaner Costs = Defective × Daily Cost × Days</li>
                             <li>Compensation Costs = (Defective × Per Owner) + (Accidents × Per Accident)</li>
                             <li>Third-Party Evaluator Impact:
@@ -158,6 +152,10 @@
                     <div class="ev-calculation">
                         <p><strong>For Payne Motors:</strong></p>
                         <ul>
+                            <li>No Public Statement: +$20M</li>
+                            <li>Public Statement (no apology): -$50M</li>
+                            <li>Public Apology (no favorable comment from Parker): -$70M</li>
+                            <li>Public Apology (favorable comment from Parker): -$10M</li>
                             <li>Wildfire Statement: +$30M</li>
                             <li>Waiving Future Claims: +$100M</li>
                             <li>Safety Regulator Commitment: -$20M</li>
@@ -165,9 +163,10 @@
                         
                         <p><strong>For Lawyer:</strong></p>
                         <ul>
-                            <li>Public Apology: +$8M</li>
+                            <li>No Public Statement: -$30M</li>
                             <li>Any Public Statement: +$2M</li>
-                            <li>Favorable Comment: +$3M</li>
+                            <li>Public Apology: +$8M (additional)</li>
+                            <li>Commenting Favorably on PM's Apology: +$3M</li>
                             <li>Wildfire Statement: -$100M</li>
                             <li>Waiving Future Claims: -$30M</li>
                             <li>Safety Regulator Commitment: +$5M</li>
@@ -175,6 +174,7 @@
                         
                         <p><strong>For Plaintiffs:</strong></p>
                         <ul>
+                            <li>No Public Statement: -$50M</li>
                             <li>Public Statement: +$10M</li>
                             <li>Waiving Future Claims: -$70M</li>
                             <li>Safety Regulator Commitment: +$10M</li>
@@ -224,7 +224,7 @@
                     <li>First concession: Add loaner vehicles for highest-risk vehicles</li>
                     <li>Second concession: Increase compensation to $150M with tiered distribution</li>
                     <li>Third concession: Public statement acknowledging issue (not a full apology)</li>
-                    <li>Final position: $300M compensation + full recall with loaners + public statement</li>
+                    <li>Final position: $300M compensation + full recall with loaners + public apology (contingent on favorable comment)</li>
                 </ol>
             </div>
             
@@ -245,7 +245,7 @@
                         </div>
                         
                         <div class="form-group">
-                            <label>Will Payne Motors pay for the replacement pawls?</label>
+                            <label>Will Payne Motors pay for the replacement pawls? (Warning: Required by Law)</label>
                             <div class="radio-group">
                                 <label><input type="radio" name="payForPawls" value="yes" checked> Yes</label>
                                 <label><input type="radio" name="payForPawls" value="no"> No</label>

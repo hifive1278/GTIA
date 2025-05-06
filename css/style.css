@@ -257,6 +257,7 @@ body {
     border-radius: 5px;
     padding: 15px;
     margin: 15px 0;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
 
 .zopa-visualization {
@@ -302,6 +303,47 @@ body {
     height: 20px;
     background-color: rgba(52, 152, 219, 0.3);
     top: 40px;
+}
+
+/* Enhanced EV Analysis styling */
+.dynamic-ev-section {
+    margin-top: 25px;
+}
+
+.dynamic-ev-section h4 {
+    color: #2980b9;
+    margin: 20px 0 10px;
+    padding-bottom: 5px;
+    border-bottom: 1px dashed #bde0fe;
+}
+
+.dynamic-ev-section ul {
+    padding-left: 20px;
+}
+
+.dynamic-ev-section ul li {
+    margin-bottom: 8px;
+    line-height: 1.5;
+}
+
+.dynamic-ev-section ul ul {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.dynamic-ev-section p {
+    margin-bottom: 10px;
+}
+
+.ev-calculation strong {
+    color: #2c3e50;
+}
+
+.ev-calculation ul li ul {
+    margin-top: 8px;
+    margin-left: 15px;
+    padding-left: 10px;
+    border-left: 2px solid #e0e0e0;
 }
 
 /* Submit Deal Form Styles */
@@ -405,7 +447,7 @@ input[type="number"] {
     justify-content: space-between;
     margin-bottom: 10px;
     padding: 10px;
-    background-color: white;
+    background-color: #f0fff0;
     border-radius: 5px;
 }
 
@@ -443,6 +485,15 @@ input[type="number"] {
     border-radius: 5px;
     font-weight: bold;
     font-size: 18px;
+}
+
+.integrative-value .result-row {
+    margin-bottom: 8px;
+}
+
+.integrative-value h4 {
+    border-bottom: 1px solid #a8e4b0;
+    padding-bottom: 8px;
 }
 
 .result-label {

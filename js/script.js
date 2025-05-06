@@ -721,6 +721,7 @@ function calculateExpectedValues() {
     const recallCostPerFunctionalVehicle = 30; // $50 per vehicle ($0 parts + $30 labor)
     const baseLoanerCostPerDay = 50; // $50 per vehicle per day
     const courtCostPayneMotors = 900000000; // $900M if going to court
+    const courtWinningsPlaintiffs = 800000000; // $800M winnings in court (assuming Payne spends $100M on lawyers, etc.)
     const prDamageCost = 100000000; // $100M estimated PR damage cost
     const costPerEvaluation = 500; // $500 for third party to investigate 1 accident claim
     
@@ -771,10 +772,10 @@ function calculateExpectedValues() {
         if (formData.publicStatement) {
             let prCostReduction = 0;
             if (formData.apology) {
-                prCostReduction = formData.favorableComment ? 0.1 : 0.5; 
+                prCostReduction = formData.favorableComment ? 0.1 : 0.7; 
                 lawyerEV += 8000000; // really benefits from forcing public apology
             } else {
-                prCostReduction = 0.7; // without favorable comment, actually worse to apologize
+                prCostReduction = 0.5; // without favorable comment, actually worse to apologize
             }
             payneEV -= prDamageCost * prCostReduction;
             lawyerEV += 2000000; // benefits from forcing any public statement
@@ -810,12 +811,12 @@ function calculateExpectedValues() {
         payneEV = -(courtCostPayneMotors) - prDamageCost; // Court cost + PR damage
         
         // Lawyer's cut is 30% of the court outcome
-        lawyerEV = courtCostPayneMotors * lawyerFeePercentage * lawyerWinProbability;
+        lawyerEV = courtWinningsPlaintiffs * lawyerFeePercentage * lawyerWinProbability;
         
         // Plaintiffs get the remaining 70% of the expected court outcome
-        plaintiffEV = courtCostPayneMotors * lawyerWinProbability * (1 - lawyerFeePercentage);
+        plaintiffEV = courtWinningsPlaintiffs * lawyerWinProbability * (1 - lawyerFeePercentage);
         
-        totalCost = courtCostPayneMotors;
+        totalCost = courtWinningsPlaintiffs;
     }
         
     // Display the results
@@ -823,6 +824,37 @@ function calculateExpectedValues() {
     document.getElementById('plaintiff-ev').textContent = formatCurrency(plaintiffEV);
     document.getElementById('lawyer-ev').textContent = formatCurrency(lawyerEV);
     document.getElementById('total-cost').textContent = formatCurrency(totalCost);
+    
+    // Calculate trial values for comparison (BATNA)
+    const trialPayneEV = -courtCostPayneMotors - prDamageCost;
+    const trialLawyerEV = courtWinningsPlaintiffs * lawyerFeePercentage * lawyerWinProbability;
+    const trialPlaintiffEV = courtWinningsPlaintiffs * lawyerWinProbability * (1 - lawyerFeePercentage);
+    
+    // Calculate integrative value created (if elements exist)
+    if (document.getElementById('total-ev-deal') && 
+        document.getElementById('total-ev-trial') && 
+        document.getElementById('value-created')) {
+        
+        const totalEVDeal = payneEV + plaintiffEV + lawyerEV;
+        const totalEVTrial = trialPayneEV + trialLawyerEV + trialPlaintiffEV;
+        const valueCreated = totalEVDeal - totalEVTrial;
+        
+        // Display integrative value results
+        document.getElementById('total-ev-deal').textContent = formatCurrency(totalEVDeal);
+        document.getElementById('total-ev-trial').textContent = formatCurrency(totalEVTrial);
+        document.getElementById('value-created').textContent = formatCurrency(valueCreated);
+        
+        // Change color based on whether value was created or destroyed
+        const valueCreatedElement = document.getElementById('value-created');
+        if (valueCreated > 0) {
+            valueCreatedElement.style.color = '#27ae60'; // Green for positive value
+        } else {
+            valueCreatedElement.style.color = '#c0392b'; // Red for negative value
+        }
+    }
+
+    // Create breakdown tables for each decision's impact on the parties
+    createEVBreakdownTable(formData, trialPayneEV, trialPlaintiffEV, trialLawyerEV);
 
     // So we can soon update preference display
     const payneIncentivized = document.querySelector('.payne-incentivized');
@@ -830,13 +862,9 @@ function calculateExpectedValues() {
     const lawyerIncentivized = document.querySelector('.lawyer-incentivized');
     const lawyerNotIncentivized = document.querySelector('.lawyer-not-incentivized');
         
-    // Calculate lawyer's expected value from going to trial instead
-    const trialLawyerEV = courtCostPayneMotors * lawyerFeePercentage * lawyerWinProbability;
+    // Use the trial values we calculated earlier
     const lawyerPrefersTrial = lawyerEV < trialLawyerEV;
-
-    // Calculate if Payne Motors prefers to go to trial
-    const payneTrialEV = -courtCostPayneMotors - prDamageCost;
-    const paynePrefersTrial = payneEV < payneTrialEV;
+    const paynePrefersTrial = payneEV < trialPayneEV;
 
     const lawyerNotIncentivizedLabel = document.querySelector('.lawyer-not-incentivized-label');
     const payneNotIncentivizedLabel = document.querySelector('.payne-not-incentivized-label');
@@ -919,7 +947,279 @@ function formatCurrency(value) {
     return value < 0 ? '-' + formatted : formatted;
 }
 
-// Initialize the game when page loads
+// Function to create EV breakdown table for decisions
+function createEVBreakdownTable(formData, trialPayneEV, trialPlaintiffEV, trialLawyerEV) {
+    // Remove any existing breakdown
+    const existingBreakdown = document.getElementById('ev-breakdown');
+    if (existingBreakdown) {
+        existingBreakdown.remove();
+    }
+    
+    // Constants used in EV calculation
+    const totalHydras = 1000000;
+    const defectiveHydras = 100000;
+    let accidentHydras = 111100;
+    const recallCostPerDefectiveVehicle = 140; // $140 per vehicle ($40 parts + $100 labor)
+    const recallCostPerFunctionalVehicle = 30; // $50 per vehicle ($0 parts + $30 labor)
+    const baseLoanerCostPerDay = 50; // $50 per vehicle per day
+    const courtCostPayneMotors = 900000000; // $900M if going to court
+    const courtWinningsPlaintiffs = 800000000; // $800M winnings in court (assuming Payne spends $100M on lawyers, etc.)
+    const prDamageCost = 100000000; // $100M estimated PR damage cost
+    const costPerEvaluation = 500; // $500 for third party to investigate 1 accident claim
+    const lawyerFeePercentage = 0.30; // 30% of settlement or judgment
+
+    // Create breakdown container
+    const breakdownDiv = document.createElement('div');
+    breakdownDiv.id = 'ev-breakdown';
+    breakdownDiv.className = 'ev-breakdown';
+    
+    // Add header
+    const header = document.createElement('h3');
+    header.textContent = 'EV Formula Breakdown';
+    breakdownDiv.appendChild(header);
+    
+    // Create table
+    const table = document.createElement('table');
+    table.className = 'ev-breakdown-table';
+    
+    // Create table header
+    const thead = document.createElement('thead');
+    const headerRow = document.createElement('tr');
+    const headers = ['Decision', 'Payne Motors', 'Plaintiffs', 'Lawyer'];
+    
+    headers.forEach(text => {
+        const th = document.createElement('th');
+        th.textContent = text;
+        headerRow.appendChild(th);
+    });
+    
+    thead.appendChild(headerRow);
+    table.appendChild(thead);
+    
+    // Create table body
+    const tbody = document.createElement('tbody');
+    
+    // Add rows with EV impact calculations for each decision
+    if (formData.recall) {
+        // Calculate recall costs
+        if (formData.payForPawls) {
+            const recallCost = (totalHydras-defectiveHydras) * recallCostPerFunctionalVehicle + defectiveHydras * recallCostPerDefectiveVehicle;
+            addRow(tbody, 'Recall with pawl replacement', 
+                   formatCurrency(-recallCost), 
+                   formatCurrency(recallCost), 
+                   formatCurrency(recallCost * 0.2));
+        } else {
+            addRow(tbody, 'Recall without pawl replacement', 
+                   '$0', 
+                   '$0', 
+                   '$0');
+        }
+        
+        // Loaner vehicle costs
+        if (formData.loanerVehicles) {
+            const loanerCost = defectiveHydras * baseLoanerCostPerDay * formData.loanerDays;
+            addRow(tbody, `Loaner vehicles (${formData.loanerDays} days)`, 
+                   formatCurrency(-loanerCost), 
+                   formatCurrency(loanerCost), 
+                   formatCurrency(loanerCost * 0.2));
+        }
+        
+        // Third-party evaluator
+        if (formData.thirdPartyEvaluator) {
+            const evaluatorTotalCost = accidentHydras * costPerEvaluation;
+            addRow(tbody, 'Third-party evaluator', 
+                   formatCurrency(-evaluatorTotalCost), 
+                   '$0', 
+                   '$0');
+            
+            // Reduce accident claims by 80% when using evaluator
+            accidentHydras = Math.round(accidentHydras * 0.2);
+            addRow(tbody, 'Reduced accident claims (80% reduction)', 
+                   '$0', 
+                   '$0', 
+                   '$0');
+        }
+        
+        // Compensation costs
+        const ownerCompensation = defectiveHydras * formData.compensationPerOwner;
+        if (ownerCompensation > 0) {
+            addRow(tbody, `Compensation to owners ($${formData.compensationPerOwner.toLocaleString()} each)`, 
+                   formatCurrency(-ownerCompensation), 
+                   formatCurrency(ownerCompensation * (1 - lawyerFeePercentage)), 
+                   formatCurrency(ownerCompensation * lawyerFeePercentage));
+        }
+        
+        const accidentCompensation = accidentHydras * formData.compensationPerAccident;
+        if (accidentCompensation > 0) {
+            addRow(tbody, `Compensation for accidents ($${formData.compensationPerAccident.toLocaleString()} each)`, 
+                   formatCurrency(-accidentCompensation), 
+                   formatCurrency(accidentCompensation * (1 - lawyerFeePercentage)), 
+                   formatCurrency(accidentCompensation * lawyerFeePercentage));
+        }
+        
+        // PR impact
+        if (formData.publicStatement) {
+            let prCostReduction = 0;
+            if (formData.apology) {
+                prCostReduction = formData.favorableComment ? 0.1 : 0.5;
+                addRow(tbody, 'Public statement with apology', 
+                       formatCurrency(-prDamageCost * prCostReduction), 
+                       formatCurrency(10000000), 
+                       formatCurrency(formData.favorableComment ? 8000000 + 2000000 : 8000000));
+            } else {
+                prCostReduction = 0.7;
+                addRow(tbody, 'Public statement without apology', 
+                       formatCurrency(-prDamageCost * prCostReduction), 
+                       formatCurrency(10000000), 
+                       formatCurrency(2000000));
+            }
+        }
+        
+        // Favorable comments
+        if (formData.favorableComment && !formData.publicStatement) {
+            addRow(tbody, 'Favorable comments by Parker', 
+                   '$0', 
+                   '$0', 
+                   formatCurrency(3000000));
+        }
+        
+        // Wildfire statement
+        if (formData.wildfireStatement) {
+            addRow(tbody, 'Wildfire statement', 
+                   formatCurrency(30000000), 
+                   '$0', 
+                   formatCurrency(-100000000));
+        }
+        
+        // Future claim waivers
+        if (formData.waiveFutureClaims) {
+            addRow(tbody, 'Waive future claims', 
+                   formatCurrency(100000000), 
+                   formatCurrency(-70000000), 
+                   formatCurrency(-30000000));
+        }
+        
+        // Safety regulator commitment
+        if (formData.safetyRegulators) {
+            addRow(tbody, 'Safety regulator commitment', 
+                   formatCurrency(-20000000), 
+                   formatCurrency(10000000), 
+                   formatCurrency(5000000));
+        }
+    } else {
+        // No settlement - going to trial
+        addRow(tbody, 'No settlement (going to trial)', 
+               formatCurrency(trialPayneEV), 
+               formatCurrency(trialPlaintiffEV), 
+               formatCurrency(trialLawyerEV));
+    }
+    
+    table.appendChild(tbody);
+    breakdownDiv.appendChild(table);
+    
+    // Add the breakdown after the Total Settlement Cost
+    const resultsContainer = document.getElementById('ev-results');
+    resultsContainer.appendChild(breakdownDiv);
+    
+    // Add CSS for the breakdown table
+    const style = document.createElement('style');
+    style.textContent = `
+        .ev-breakdown {
+            margin-top: 20px;
+            background-color: #f0f9ff;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .ev-breakdown h3 {
+            color: #2980b9;
+            border-bottom: 1px solid #bde0fe;
+            padding-bottom: 8px;
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+        
+        .ev-breakdown-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+        
+        .ev-breakdown-table th, .ev-breakdown-table td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .ev-breakdown-table th {
+            background-color: #e8f4fc;
+            font-weight: bold;
+            color: #2980b9;
+        }
+        
+        .ev-breakdown-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        .ev-breakdown-table tr:hover {
+            background-color: #eaf7ff;
+        }
+        
+        .ev-breakdown-table td:first-child {
+            font-weight: bold;
+        }
+        
+        .ev-breakdown-table td.positive {
+            color: #27ae60;
+        }
+        
+        .ev-breakdown-table td.negative {
+            color: #c0392b;
+        }
+    `;
+    
+    document.head.appendChild(style);
+}
+
+// Helper function to add a row to the EV breakdown table
+function addRow(tbody, decision, payneImpact, plaintiffImpact, lawyerImpact) {
+    const row = document.createElement('tr');
+    
+    const decisionCell = document.createElement('td');
+    decisionCell.textContent = decision;
+    row.appendChild(decisionCell);
+    
+    const payneCell = document.createElement('td');
+    payneCell.textContent = payneImpact;
+    if (payneImpact.includes('-')) {
+        payneCell.className = 'negative';
+    } else if (payneImpact !== '$0') {
+        payneCell.className = 'positive';
+    }
+    row.appendChild(payneCell);
+    
+    const plaintiffCell = document.createElement('td');
+    plaintiffCell.textContent = plaintiffImpact;
+    if (plaintiffImpact.includes('-')) {
+        plaintiffCell.className = 'negative';
+    } else if (plaintiffImpact !== '$0') {
+        plaintiffCell.className = 'positive';
+    }
+    row.appendChild(plaintiffCell);
+    
+    const lawyerCell = document.createElement('td');
+    lawyerCell.textContent = lawyerImpact;
+    if (lawyerImpact.includes('-')) {
+        lawyerCell.className = 'negative';
+    } else if (lawyerImpact !== '$0') {
+        lawyerCell.className = 'positive';
+    }
+    row.appendChild(lawyerCell);
+    
+    tbody.appendChild(row);
+}
+
 window.addEventListener('DOMContentLoaded', () => {
     console.log('DOM loaded, initializing game...');
     

@@ -89,31 +89,108 @@
             <div class="tab-content" id="ev-analysis">
                 <h2>Expected Value Analysis</h2>
                 
-                <h3>Payne Motors EV Calculation</h3>
-                <div class="ev-calculation">
-                    <p>EV = (Probability of Trial) × (Cost of Trial) + (Probability of Settlement) × (Cost of Settlement)</p>
-                    <p>Where:</p>
-                    <ul>
-                        <li>Probability of Trial = 30%</li>
-                        <li>Cost of Trial = $900M (plus PR damage)</li>
-                        <li>Probability of Settlement = 70%</li>
-                        <li>Aspirational Settlement = $140M (recall only)</li>
-                        <li>Reserve Settlement = $500M + $140M recall</li>
-                    </ul>
-                    <p>Aspirational EV = 0.3 × $900M + 0.7 × $140M = $270M + $98M = $368M</p>
-                    <p>Worst Case EV = 0.3 × $900M + 0.7 × $640M = $270M + $448M = $718M</p>
-                </div>
-                
                 <h3>Zone of Possible Agreement (ZOPA)</h3>
                 <div class="zopa-visualization">
                     <div class="zopa-scale">
-                        <div class="zopa-marker" style="left: 14%;">$14M<br>(PM Aspiration)</div>
+                        <div class="zopa-marker" style="left: 14%;">$14M<br>(PM Goal)</div>
                         <div class="zopa-zone" style="left: 30%; width: 20%;"></div>
-                        <div class="zopa-marker" style="left: 30%;">$300M<br>(Davis RP)</div>
-                        <div class="zopa-marker" style="left: 50%;">$500M+$14M<br>(PM RP)</div>
-                        <div class="zopa-marker" style="left: 90%;">$3.22B<br>(Davis Aspiration)</div>
+                        <div class="zopa-marker" style="left: 30%;">$180M<br>(Parker RP)</div>
+                        <div class="zopa-marker" style="left: 50%;">$1B<br>(PM RP)</div>
+                        <div class="zopa-marker" style="left: 90%;">$3.22B<br>(Parker Goal)</div>
                     </div>
                     <div class="zopa-line"></div>
+                </div>
+                
+                <h3>Settlement EV Calculations</h3>
+                <div class="dynamic-ev-section">
+                    <p>Below are the key calculations from the Expected Value formula used in the Submit Deal tab:</p>
+                    
+                    <h4>Key Constants in EV Calculations</h4>
+                    <div class="ev-calculation">
+                        <ul>
+                            <li>Total Hydra Vehicles: 1,000,000</li>
+                            <li>Vehicles with Defective Pawls: 100,000</li>
+                            <li>Vehicles with Reported Accidents: 111,100</li>
+                            <li>Recall Cost per Defective Vehicle: $140 ($40 parts + $100 labor)</li>
+                            <li>Recall Cost per Functional Vehicle: $30 (inspection only)</li>
+                            <li>Loaner Vehicle Cost: $50 per vehicle per day</li>
+                            <li>Court Cost if Going to Trial: $900M</li>
+                            <li>PR Damage Cost: $100M</li>
+                            <li>Third-Party Evaluation Cost: $500 per claim</li>
+                        </ul>
+                    </div>
+
+                    <h4>EV Calculation Formulas</h4>
+                    <div class="ev-calculation">
+                        <p><strong>Settlement Scenario:</strong></p>
+                        <ul>
+                            <li>Recall Costs = (Total - Defective) × Functional Cost + Defective × Defective Cost</li>
+                            <li>Loaner Costs = Defective × Daily Cost × Days</li>
+                            <li>Compensation Costs = (Defective × Per Owner) + (Accidents × Per Accident)</li>
+                            <li>Third-Party Evaluator Impact:
+                                <ul>
+                                    <li>Cost = Accident Claims × $500</li>
+                                    <li>Reduces Accident Claims by 80%</li>
+                                </ul>
+                            </li>
+                            <li>PR Damage Cost varies by statement type (% compared to $100M if go to court):
+                                <ul>
+                                    <li>With apology and favorable comment: 10% of cost (best to take responsibility and be embraced)</li> 
+                                    <li>With apology, no favorable comment: 70% of cost (worst to take responsibility and be lambasted)</li>
+                                    <li>Without apology: 50% of cost (middling to ignore responsibility)</li>
+                                    <li>NOTE: This is based off studies that show apologies affect stock positively if receive positive media attention, and negatively if little or negative media attention</li>
+                                </ul>
+                            </li>
+                            <li>Lawyer gets 30% of monetary compensation</li>
+                            <li>Plaintiffs get 70% of monetary compensation</li>
+                        </ul>
+                        
+                        <p><strong>No Settlement (Trial) Scenario:</strong></p>
+                        <ul>
+                            <li>Payne Motors EV = -Total Litigation Cost ($900M) - PR Damage ($100M) = -$1B</li>
+                            <li>Lawyer's EV = Winnings ($800M) × 30% fee × 75% Win Probability = $180M</li>
+                            <li>Plaintiffs' EV = Winnings ($800M) × 70% × 75% Win Probability = $420M</li>
+
+                        </ul>
+                    </div>
+                    
+                    <h4>Additional EV Impacts</h4>
+                    <div class="ev-calculation">
+                        <p><strong>For Payne Motors:</strong></p>
+                        <ul>
+                            <li>Wildfire Statement: +$30M</li>
+                            <li>Waiving Future Claims: +$100M</li>
+                            <li>Safety Regulator Commitment: -$20M</li>
+                        </ul>
+                        
+                        <p><strong>For Lawyer:</strong></p>
+                        <ul>
+                            <li>Public Apology: +$8M</li>
+                            <li>Any Public Statement: +$2M</li>
+                            <li>Favorable Comment: +$3M</li>
+                            <li>Wildfire Statement: -$100M</li>
+                            <li>Waiving Future Claims: -$30M</li>
+                            <li>Safety Regulator Commitment: +$5M</li>
+                        </ul>
+                        
+                        <p><strong>For Plaintiffs:</strong></p>
+                        <ul>
+                            <li>Public Statement: +$10M</li>
+                            <li>Waiving Future Claims: -$70M</li>
+                            <li>Safety Regulator Commitment: +$10M</li>
+                        </ul>
+                    </div>
+                    
+                    <h4>Settlement Incentive Logic</h4>
+                    <p>The system checks whether each party would prefer the deal or going to trial:</p>
+                    <div class="ev-calculation">
+                        <ul>
+                            <li>Lawyer prefers settlement if: Settlement EV > Trial EV (Court × 30% × 75%)</li>
+                            <li>Payne Motors prefers settlement if: Settlement EV > Trial EV ($900M + $100M PR damage)</li>
+                            <li>When both prefer settlement: Green "Both parties prefer to settle"</li>
+                            <li>When either prefers trial: Orange/Red warning</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
             <div class="tab-content" id="tactics">
@@ -300,8 +377,23 @@
                             <div class="result-label">Settlement Status: <span id="settlement-status">Unknown</span></div>
                         </div>
                         <div class="total-cost">
-                            <div class="result-label">Total Settlement Cost:</div>
+                            <div class="result-label">Total Payment Awarded:</div>
                             <div class="result-value" id="total-cost">$0</div>
+                        </div>
+                        <div class="integrative-value" style="margin-top: 15px; padding: 15px; background-color: #f0fff0; border-radius: 5px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+                            <h4 style="color: #27ae60; margin-top: 0; margin-bottom: 10px; font-weight: bold;">Integrative Value Created</h4>
+                            <div class="result-row">
+                                <div class="result-label">Total EV of Current Deal:</div>
+                                <div class="result-value" id="total-ev-deal">$0</div>
+                            </div>
+                            <div class="result-row">
+                                <div class="result-label">Total EV of Trial (BATNA):</div>
+                                <div class="result-value" id="total-ev-trial">$0</div>
+                            </div>
+                            <div class="result-row" style="font-weight: bold; margin-top: 10px; border-top: 1px dashed #27ae60; padding-top: 10px;">
+                                <div class="result-label">Value Created by Negotiation:</div>
+                                <div class="result-value" id="value-created">$0</div>
+                            </div>
                         </div>
                     </div>
                 </form>

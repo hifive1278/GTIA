@@ -112,8 +112,8 @@ const negotiationScenario = [
         speaker: "counterpart",
         text: "I accept your apology. Now, what's Payne Motors' actual position on our settlement demands? My clients need concrete solutions, not just acknowledgments.",
         choices: [
-            { text: "We're prepared to offer a full recall with loaner vehicles and a $200 million compensation fund with a structured distribution process.", nextScene: 31 },
-            { text: "We'll initiate an immediate recall and establish a $225 million fund with an independent administrator to evaluate claims fairly.", nextScene: 32 },
+            { text: "We're prepared to offer a full recall with loaner vehicles and a $200 million compensation fund with a structured distribution process.", nextScene: 40 },
+            { text: "We'll initiate an immediate recall and establish a $225 million fund with an independent administrator to evaluate claims fairly.", nextScene: 41 },
             { text: "We'll offer a comprehensive package: recall, loaner vehicles, $250 million in compensation, and extended warranties on all affected vehicles.", nextScene: 33 }
         ]
     },
@@ -131,8 +131,8 @@ const negotiationScenario = [
         speaker: "counterpart",
         text: "I appreciate your apology. Let me be clear though - while we can discuss the structure of compensation, waiting years for causation studies isn't acceptable. My clients need resolution now.",
         choices: [
-            { text: "You're right, and we don't want to delay. We'll implement an expedited review process with a $200 million compensation fund as a starting point.", nextScene: 31 },
-            { text: "We agree on the need for swift action. We'll begin recall immediately and establish a $225 million compensation fund with fair distribution criteria.", nextScene: 32 },
+            { text: "You're right, and we don't want to delay. We'll implement an expedited review process with a $200 million compensation fund as a starting point.", nextScene: 40 },
+            { text: "We agree on the need for swift action. We'll begin recall immediately and establish a $225 million compensation fund with fair distribution criteria.", nextScene: 41 },
             { text: "We'll commit to immediate action with a $250 million fund, plus extended warranties on all affected vehicles to address both current and future concerns.", nextScene: 33 }
         ]
     },
@@ -354,10 +354,28 @@ const negotiationScenario = [
             { text: "Excellent. We're committed to following through on all aspects of this agreement.", nextScene: "success" }
         ]
     },
+    // Scene 40:
+    {
+        speaker: "counterpart",
+        text: "The $200 million offer is still insufficient for a case of this magnitude. My clients have suffered significant damages and deserve fair compensation for both actual harm and diminished value.",
+        choices: [
+            { text: "We understand the seriousness of this issue. We can increase our offer to $300 million with full recall, loaners, and a public acknowledgment.", nextScene: "success" },
+            { text: "$200 million is already generous considering how weak your case is. This settlement is a gift, not an obligation. I suggest you take it before we withdraw it.", nextScene: "failure" }
+        ]
+    },
+    // Scene 41:
+    {
+        speaker: "counterpart",
+        text: "The $225 million proposal with an independent administrator has merit. This structure would ensure fair distribution, but we need to discuss whether the total amount is sufficient.",
+        choices: [
+            { text: "We can increase the total to $275 million while maintaining the independent administration and expedited process.", nextScene: "success" },
+            { text: "Why are you still pushing me? You'll make bank with this deal, just take it.", nextScene: "failure" }
+        ]
+    },
     // Success outcome
     {
         speaker: "counterpart",
-        text: "Congratulations! You successfully negotiated a settlement that protects Payne Motors' interests while addressing customer concerns. The compensation is well below the plaintiffs' demand of $3.22 billion, and the ZOPA you identified was accurate.",
+        text: "Good job, Ms. Hastings! You successfully negotiated a settlement that protects Payne Motors' interests while addressing customer concerns. The board will fall to their knees in awe of your talent as a sharp interlocutor, and shareholders will smile softly to themselves in the far-off distance and whisper, 'That's my CEO.'",
         choices: [
             { text: "Play Again", nextScene: "restart" }
         ]
@@ -365,7 +383,7 @@ const negotiationScenario = [
     // Failure outcome
     {
         speaker: "counterpart",
-        text: "Unfortunately, you were unable to reach a settlement with Davis Parker. The case will now proceed to trial, exposing Payne Motors to potentially higher damages and significant PR damage. You might want to try again with a different negotiation approach, perhaps employing more tactical empathy or identifying better integration opportunities.",
+        text: "Unfortunately, Ms. Hastings, you were unable to reach a settlement with Davis Parker. The case will now proceed to trial, exposing Payne Motors to the million-dollar circus which is litigation. You should've employed more tactical empathy and identified better integration opportunities. Dan taught you better than this.",
         choices: [
             { text: "Try Again", nextScene: "restart" }
         ]

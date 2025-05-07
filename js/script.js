@@ -23,7 +23,7 @@ const negotiationScenario = [
         text: "Our calculations are based on the number of accidents involving Hydras and the estimated number of vehicles with defective pawls. Each accident victim deserves $20,000, and each owner with defective pawls should receive $10,000.",
         choices: [
             { text: "I appreciate the detailed breakdown. However, we need to establish causation between pawls and accidents before discussing compensation amounts.", nextScene: 4 },
-            { text: "We'd like to propose a more reasonable approach: a targeted recall program plus a $30 million compensation fund for verified damages.", nextScene: 5 },
+            { text: "We'd like to propose a more reasonable approach: a targeted recall program plus a $70 million compensation fund for verified damages.", nextScene: 5 },
             { text: "We recognize the need for some compensation, but these figures are inflated. We'd propose a more modest compensation structure based on actual damages.", nextScene: 6 }
         ]
     },
@@ -54,17 +54,17 @@ const negotiationScenario = [
         choices: [
             { text: "Safety is our priority. We'll offer an expedited review process with independent experts to validate claims quickly while ensuring fairness.", nextScene: 13 },
             { text: "We'll agree to a presumption of defect for all recalled vehicles to streamline the process, but we still need reasonable compensation terms.", nextScene: 14 },
-            { text: "We propose a $150 million compensation fund with a structured claims process overseen by an independent administrator.", nextScene: 15 }
+            { text: "We propose a $350 million compensation fund with a structured claims process overseen by an independent administrator.", nextScene: 15 }
         ]
     },
     // Scene 5: $30M proposal response
     {
         speaker: "counterpart",
-        text: "A $30 million fund is entirely insufficient. That's less than 1% of our claim. My clients have suffered real damages, and they deserve fair compensation. I'm willing to discuss the structure, but not such a low amount.",
+        text: "A $70 million fund is entirely insufficient. That's less than 1% of our claim. My clients have suffered real damages, and they deserve fair compensation. I'm willing to discuss the structure, but not such a low amount.",
         choices: [
-            { text: "We could increase the compensation fund to $100 million but distribute it based on verified damages. Those with documented incidents would receive more.", nextScene: 16 },
+            { text: "We could increase the compensation fund to $250 million but distribute it based on verified damages. Those with documented incidents would receive more.", nextScene: 16 },
             { text: "What if we offer loaner vehicles during repairs for all affected customers in addition to the compensation fund?", nextScene: 17 },
-            { text: "Your clients' demands are outrageous. Our BATNA is to fight this in court where our legal team believes we'd only pay $31 million at most. Now, $29 million is our final offer. Clock is ticking.", nextScene: "failure" }
+            { text: "Your clients' demands are outrageous. Our BATNA is to fight this in court where our legal team believes we'd only pay $71 million at most. Now, $69 million is our final offer. Clock is ticking.", nextScene: "failure" }
         ]
     },
     // Scene 6: Modest compensation response
@@ -73,7 +73,7 @@ const negotiationScenario = [
         text: "I'm glad you acknowledge the need for compensation. However, 'modest' doesn't address the magnitude of the issue. These defects have created significant safety risks and diminished vehicle values for all owners.",
         choices: [
             { text: "We could establish a tiered compensation system - higher amounts for those with documented incidents and a smaller amount for all affected owners.", nextScene: 19 },
-            { text: "What if we provide extended warranties and free service for all recalled vehicles in addition to a compensation fund of $200 million?", nextScene: 20 },
+            { text: "What if we provide extended warranties and free service for all recalled vehicles in addition to a compensation fund of $470 million?", nextScene: 20 },
             { text: "We understand the concerns about vehicle value. What if we offer a trade-in value guarantee program for all affected Hydra owners?", nextScene: 21 }
         ]
     },
@@ -82,8 +82,8 @@ const negotiationScenario = [
         speaker: "counterpart",
         text: "Your maintenance argument is weak at best. The evidence clearly shows that these pawls are defective. This isn't about user error; it's about a design flaw that Payne Motors tried to hide.",
         choices: [
-            { text: "I assure you we never intentionally concealed any issues. We're committed to customer safety, which is why we're offering a comprehensive recall with a $250 million fund.", nextScene: 22 },
-            { text: "What if we agree to a public statement acknowledging the issue, in addition to the recall and a $200 million compensation fund?", nextScene: 23 },
+            { text: "I assure you we never intentionally concealed any issues. We're committed to customer safety, which is why we're offering a comprehensive recall with a $580 million fund.", nextScene: 22 },
+            { text: "What if we agree to a public statement acknowledging the issue, in addition to the recall and a $470 million compensation fund?", nextScene: 23 },
             { text: "The notion that we 'tried to hide' anything is offensive and unfounded. Your clients caused these incidents through improper maintenance, and we have the data to prove it in court.", nextScene: "failure" }
         ]
     },
@@ -102,9 +102,9 @@ const negotiationScenario = [
         speaker: "counterpart",
         text: "I appreciate your willingness to discuss a full recall. That's a good starting point. But my clients also deserve fair compensation for the risks they've been exposed to and the diminished value of their vehicles.",
         choices: [
-            { text: "What if we combine a full recall with a $250 million compensation fund? This represents a significant increase from our initial position.", nextScene: 28 },
-            { text: "We could offer $275 million in total compensation with an expedited claims process and loaner vehicles during repairs.", nextScene: 29 },
-            { text: "We're prepared to offer $300 million with a structured claims process, provided you can help us manage the PR aspects of this situation.", nextScene: 30 }
+            { text: "What if we combine a full recall with a $580 million compensation fund? This represents a significant increase from our initial position.", nextScene: 28 },
+            { text: "We could offer $630 million in total compensation with an expedited claims process and loaner vehicles during repairs.", nextScene: 29 },
+            { text: "We're prepared to offer $700 million with a structured claims process, provided you can help us manage the PR aspects of this situation.", nextScene: 30 }
         ]
     },
     // Scene 10: After inappropriate remark - recovery attempt 1
@@ -112,9 +112,9 @@ const negotiationScenario = [
         speaker: "counterpart",
         text: "I accept your apology. Now, what's Payne Motors' actual position on our settlement demands? My clients need concrete solutions, not just acknowledgments.",
         choices: [
-            { text: "We're prepared to offer a full recall with loaner vehicles and a $200 million compensation fund with a structured distribution process.", nextScene: 40 },
-            { text: "We'll initiate an immediate recall and establish a $225 million fund with an independent administrator to evaluate claims fairly.", nextScene: 41 },
-            { text: "We'll offer a comprehensive package: recall, loaner vehicles, $250 million in compensation, and extended warranties on all affected vehicles.", nextScene: 33 }
+            { text: "We're prepared to offer a full recall with loaner vehicles and a $470 million compensation fund with a structured distribution process.", nextScene: 40 },
+            { text: "We'll initiate an immediate recall and establish a $525 million fund with an independent administrator to evaluate claims fairly.", nextScene: 41 },
+            { text: "We'll offer a comprehensive package: recall, loaner vehicles, $580 million in compensation, and extended warranties on all affected vehicles.", nextScene: 33 }
         ]
     },
     // Scene 11: After inappropriate remark - recovery attempt 2
@@ -131,9 +131,9 @@ const negotiationScenario = [
         speaker: "counterpart",
         text: "I appreciate your apology. Let me be clear though - while we can discuss the structure of compensation, waiting years for causation studies isn't acceptable. My clients need resolution now.",
         choices: [
-            { text: "You're right, and we don't want to delay. We'll implement an expedited review process with a $200 million compensation fund as a starting point.", nextScene: 40 },
-            { text: "We agree on the need for swift action. We'll begin recall immediately and establish a $225 million compensation fund with fair distribution criteria.", nextScene: 41 },
-            { text: "We'll commit to immediate action with a $250 million fund, plus extended warranties on all affected vehicles to address both current and future concerns.", nextScene: 33 }
+            { text: "You're right, and we don't want to delay. We'll implement an expedited review process with a $470 million compensation fund as a starting point.", nextScene: 40 },
+            { text: "We agree on the need for swift action. We'll begin recall immediately and establish a $525 million compensation fund with fair distribution criteria.", nextScene: 41 },
+            { text: "We'll commit to immediate action with a $580 million fund, plus extended warranties on all affected vehicles to address both current and future concerns.", nextScene: 33 }
         ]
     },
     // Scene 13: Successful expedited review proposal
@@ -141,7 +141,7 @@ const negotiationScenario = [
         speaker: "counterpart",
         text: "The expedited review process is a step in the right direction. Combined with an appropriate compensation fund, this could work for my clients. What total compensation figure are you proposing?",
         choices: [
-            { text: "We're prepared to offer a $300 million compensation fund, with full recall and the expedited review process we discussed.", nextScene: "success" }
+            { text: "We're prepared to offer a $700 million compensation fund, with full recall and the expedited review process we discussed.", nextScene: "success" }
         ]
     },
     // Scene 14: Successful presumption of defect
@@ -149,13 +149,13 @@ const negotiationScenario = [
         speaker: "counterpart",
         text: "The presumption of defect for all recalled vehicles would significantly streamline the process for my clients. What compensation amount are you proposing to accompany this approach?",
         choices: [
-            { text: "We propose a $275 million compensation fund with the presumption of defect for all recalled vehicles.", nextScene: "success" }
+            { text: "We propose a $630 million compensation fund with the presumption of defect for all recalled vehicles.", nextScene: "success" }
         ]
     },
     // Scene 15: $150M with administrator - insufficient
     {
         speaker: "counterpart",
-        text: "The independent administrator is a good idea, but $150 million doesn't adequately address the magnitude of harm to my clients. We need a more substantial figure to settle this matter.",
+        text: "The independent administrator is a good idea, but $350 million doesn't adequately address the magnitude of harm to my clients. We need a more substantial figure to settle this matter.",
         choices: [
             { text: "That's our final offer. Our analysis shows this is more than fair for defects that haven't been definitively proven. Take it or leave it.", nextScene: "failure" }
         ]
@@ -163,9 +163,9 @@ const negotiationScenario = [
     // Scene 16: $100M verified damages - insufficient
     {
         speaker: "counterpart",
-        text: "While the verified damages approach has merit, $100 million is still far below what my clients deserve. The total compensation package needs to reflect the serious nature of these defects.",
+        text: "While the verified damages approach has merit, $250 million is still far below what my clients deserve. The total compensation package needs to reflect the serious nature of these defects.",
         choices: [
-            { text: "I understand your concern. What if we increase the fund to $300 million while maintaining the verification process?", nextScene: "success" }
+            { text: "I understand your concern. What if we increase the fund to $700 million while maintaining the verification process?", nextScene: "success" }
         ]
     },
     // Scene 17: Loaner vehicles response - basic expectation
@@ -173,7 +173,7 @@ const negotiationScenario = [
         speaker: "counterpart",
         text: "Loaner vehicles are a basic expectation, not a concession. My clients need safe transportation while their potentially dangerous vehicles are being repaired. What else are you offering?",
         choices: [
-            { text: "You're right. We'll provide loaners for all customers during repairs and establish a $275 million compensation fund as well.", nextScene: "success" }
+            { text: "You're right. We'll provide loaners for all customers during repairs and establish a $630 million compensation fund as well.", nextScene: "success" }
         ]
     },
     // Scene 18: Safety vs compensation discussion
@@ -181,7 +181,7 @@ const negotiationScenario = [
         speaker: "counterpart",
         text: "My clients care about both safety and fair compensation. They trusted Payne Motors, and that trust was violated. A fix isn't enough - they deserve compensation for that breach of trust.",
         choices: [
-            { text: "We value our customers' trust. We'll establish a $300 million fund, plus extended warranties for all affected vehicles to demonstrate our long-term commitment.", nextScene: "success" }
+            { text: "We value our customers' trust. We'll establish a $700 million fund, plus extended warranties for all affected vehicles to demonstrate our long-term commitment.", nextScene: "success" }
         ]
     },
     // Scene 19: Tiered compensation success
@@ -189,7 +189,7 @@ const negotiationScenario = [
         speaker: "counterpart",
         text: "Your tiered compensation approach has merit. With the right total fund amount, this could address my clients' concerns while recognizing the different impacts they've experienced.",
         choices: [
-            { text: "We propose a $300 million fund with priority for those with documented incidents, full recall with loaners, and a public acknowledgment.", nextScene: "success" }
+            { text: "We propose a $700 million fund with priority for those with documented incidents, full recall with loaners, and a public acknowledgment.", nextScene: "success" }
         ]
     },
     // Scene 20: Extended warranties success
@@ -197,7 +197,7 @@ const negotiationScenario = [
         speaker: "counterpart",
         text: "The extended warranties and service program would add significant value for my clients beyond just monetary compensation. This shows a commitment to long-term customer relationships.",
         choices: [
-            { text: "We're pleased to offer these extended warranties and service, combined with a $250 million compensation fund and full recall for all affected vehicles.", nextScene: "success" }
+            { text: "We're pleased to offer these extended warranties and service, combined with a $580 million compensation fund and full recall for all affected vehicles.", nextScene: "success" }
         ]
     },
     // Scene 21: Trade-in guarantee success
@@ -205,7 +205,7 @@ const negotiationScenario = [
         speaker: "counterpart",
         text: "The trade-in value guarantee is an innovative approach that directly addresses the diminished value concern. This could be a valuable component of a comprehensive settlement.",
         choices: [
-            { text: "We're glad this addresses your concerns. We'll implement the trade-in guarantee program along with a $275 million compensation fund and full recall.", nextScene: "success" }
+            { text: "We're glad this addresses your concerns. We'll implement the trade-in guarantee program along with a $630 million compensation fund and full recall.", nextScene: "success" }
         ]
     },
     // Scene 22: Comprehensive recall with $250M
@@ -213,7 +213,7 @@ const negotiationScenario = [
         speaker: "counterpart",
         text: "Your commitment to customer safety is noted, but we still need to address the concealment issue. Internal documents suggest Payne Motors knew about these problems before the vehicles were sold.",
         choices: [
-            { text: "Without admitting any wrongdoing, we're prepared to increase our offer to $300 million with the comprehensive recall and safety measures.", nextScene: "success" },
+            { text: "Without admitting any wrongdoing, we're prepared to increase our offer to $700 million with the comprehensive recall and safety measures.", nextScene: "success" },
             { text: "Those documents are confidential and were illegally obtained. We refuse to discuss them, and if you mention them again, we'll terminate these negotiations immediately.", nextScene: "failure" }
         ]
     },
@@ -222,7 +222,7 @@ const negotiationScenario = [
         speaker: "counterpart",
         text: "A public acknowledgment would be meaningful to my clients. It shows Payne Motors taking responsibility, which is an important aspect of rebuilding trust.",
         choices: [
-            { text: "We'll issue a public statement acknowledging the issue, alongside the recall and a $275 million compensation program.", nextScene: "success" }
+            { text: "We'll issue a public statement acknowledging the issue, alongside the recall and a $630 million compensation program.", nextScene: "success" }
         ]
     },
     // Scene 24: $225M with loaners - negotiable
@@ -230,7 +230,7 @@ const negotiationScenario = [
         speaker: "counterpart",
         text: "I appreciate your focus on solutions. The loaner vehicles are essential, and $225 million is getting closer to an acceptable figure, though still below what my clients deserve.",
         choices: [
-            { text: "We can increase our offer to $275 million with loaners and an expedited claims process. Would that address your clients' concerns?", nextScene: "success" }
+            { text: "We can increase our offer to $630 million with loaners and an expedited claims process. Would that address your clients' concerns?", nextScene: "success" }
         ]
     },
     // Scene 25: Full recall with limited compensation
@@ -238,7 +238,7 @@ const negotiationScenario = [
         speaker: "counterpart",
         text: "A full recall for all vehicles is appropriate, but limiting compensation to verified damages doesn't acknowledge the diminished value and risk exposure all owners have faced.",
         choices: [
-            { text: "We understand. We'll offer a minimum compensation amount to all owners, with additional compensation for verified damages, totaling $300 million.", nextScene: "success" }
+            { text: "We understand. We'll offer a minimum compensation amount to all owners, with additional compensation for verified damages, totaling $700 million.", nextScene: "success" }
         ]
     },
     // Scene 26: Expanded recall with reasonable terms
@@ -246,7 +246,7 @@ const negotiationScenario = [
         speaker: "counterpart",
         text: "The expanded recall is appropriate, but what 'reasonable compensation terms' are you suggesting? My clients need specific figures to evaluate your proposal.",
         choices: [
-            { text: "We're prepared to offer $275 million in total compensation with a structured distribution process based on documented damages.", nextScene: "success" }
+            { text: "We're prepared to offer $630 million in total compensation with a structured distribution process based on documented damages.", nextScene: "success" }
         ]
     },
     // Scene 27: Prioritizing higher-risk vehicles
@@ -260,15 +260,15 @@ const negotiationScenario = [
     // Scene 28: $250M with full recall
     {
         speaker: "counterpart",
-        text: "The $250 million with full recall is moving in the right direction. If you're willing to include extended warranties and a public acknowledgment, we might have the basis for a settlement.",
+        text: "The $580 million with full recall is moving in the right direction. If you're willing to include extended warranties and a public acknowledgment, we might have the basis for a settlement.",
         choices: [
-            { text: "We can include both extended warranties and a public acknowledgment alongside the $250 million compensation and full recall.", nextScene: "success" }
+            { text: "We can include both extended warranties and a public acknowledgment alongside the $580 million compensation and full recall.", nextScene: "success" }
         ]
     },
     // Scene 29: $275M with expedited process
     {
         speaker: "counterpart",
-        text: "The $275 million figure with expedited claims is reasonable. Including loaner vehicles addresses the immediate safety concerns. This proposal has potential.",
+        text: "The $630 million figure with expedited claims is reasonable. Including loaner vehicles addresses the immediate safety concerns. This proposal has potential.",
         choices: [
             { text: "We're pleased to offer this comprehensive solution. Shall we proceed with drafting the settlement agreement?", nextScene: "success" }
         ]
@@ -276,17 +276,17 @@ const negotiationScenario = [
     // Scene 30: $300M with PR management
     {
         speaker: "counterpart",
-        text: "The $300 million compensation is approaching an acceptable figure. Regarding PR, I can commit to fair and factual public statements about the settlement if it's reasonable.",
+        text: "The $700 million compensation is approaching an acceptable figure. Regarding PR, I can commit to fair and factual public statements about the settlement if it's reasonable.",
         choices: [
-            { text: "That's all we ask. We'll proceed with the $300 million compensation, structured claims process, and full recall with loaners.", nextScene: "success" }
+            { text: "That's all we ask. We'll proceed with the $700 million compensation, structured claims process, and full recall with loaners.", nextScene: "success" }
         ]
     },
     // Scene 31: $200M recovery offer
     {
         speaker: "counterpart",
-        text: "You're kidding! I have an uncle who lives near there. Ah, I'm running out of time, but let's just split the difference? $350M compensation fund and public apology.",
+        text: "You're kidding! I have an uncle who lives near there. Ah, I'm running out of time, but let's just split the difference? $700M compensation fund and public apology.",
         choices: [
-            { text: "I appreciate that, but I can't do more than $100M. Can we make that work?", nextScene: "success" },
+            { text: "I appreciate that, but I can't do more than $230M. Can we make that work?", nextScene: "success" },
             { text: "Oh man, I'm so wasted right now. Yeah, sure, let's split down the middle. You ever tried a spit shake before?", nextScene: "failure" }
         ]
     },
@@ -295,13 +295,13 @@ const negotiationScenario = [
         speaker: "counterpart",
         text: "Oh man, God bless Cohen and his pockets. New York will never be the same with Soto in town. You seem like a good guy, let's just make something happen here.",
         choices: [
-            { text: "I'm with ya. Alright, $90M plus public apology, if you agree to lay off of Payne. Cool?", nextScene: "success" }
+            { text: "I'm with ya. Alright, $220M plus public apology, if you agree to lay off of Payne. Cool?", nextScene: "success" }
         ]
     },
     // Scene 33: $250M with extended warranties
     {
         speaker: "counterpart",
-        text: "The extended warranties add significant value to your offer. Combined with the $250 million compensation fund, this shows a commitment to making things right for my clients.",
+        text: "The extended warranties add significant value to your offer. Combined with the $580 million compensation fund, this shows a commitment to making things right for my clients.",
         choices: [
             { text: "We're committed to rebuilding trust with our customers. We'll implement this package promptly upon settlement.", nextScene: "success" }
         ]
@@ -357,18 +357,18 @@ const negotiationScenario = [
     // Scene 40:
     {
         speaker: "counterpart",
-        text: "The $200 million offer is still insufficient for a case of this magnitude. My clients have suffered significant damages and deserve fair compensation for both actual harm and diminished value.",
+        text: "The $470 million offer is still insufficient for a case of this magnitude. My clients have suffered significant damages and deserve fair compensation for both actual harm and diminished value.",
         choices: [
-            { text: "We understand the seriousness of this issue. We can increase our offer to $300 million with full recall, loaners, and a public acknowledgment.", nextScene: "success" },
-            { text: "$200 million is already generous considering how weak your case is. This settlement is a gift, not an obligation. I suggest you take it before we withdraw it.", nextScene: "failure" }
+            { text: "We understand the seriousness of this issue. We can increase our offer to $700 million with full recall, loaners, and a public acknowledgment.", nextScene: "success" },
+            { text: "$470 million is already generous considering how weak your case is. This settlement is a gift, not an obligation. I suggest you take it before we withdraw it.", nextScene: "failure" }
         ]
     },
     // Scene 41:
     {
         speaker: "counterpart",
-        text: "The $225 million proposal with an independent administrator has merit. This structure would ensure fair distribution, but we need to discuss whether the total amount is sufficient.",
+        text: "The $525 million proposal with an independent administrator has merit. This structure would ensure fair distribution, but we need to discuss whether the total amount is sufficient.",
         choices: [
-            { text: "We can increase the total to $275 million while maintaining the independent administration and expedited process.", nextScene: "success" },
+            { text: "We can increase the total to $630 million while maintaining the independent administration and expedited process.", nextScene: "success" },
             { text: "Why are you still pushing me? You'll make bank with this deal, just take it.", nextScene: "failure" }
         ]
     },

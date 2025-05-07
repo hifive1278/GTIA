@@ -225,18 +225,18 @@ body {
 }
 
 /* Info tabs styling */
-#your-goals, #counterpart-info, #ev-analysis, #tactics {
+#your-goals, #counterpart-info, #ev-analysis, #tactics, #insights {
     line-height: 1.6;
 }
 
-#your-goals h2, #counterpart-info h2, #ev-analysis h2, #tactics h2 {
+#your-goals h2, #counterpart-info h2, #ev-analysis h2, #tactics h2, #insights h2 {
     margin-bottom: 20px;
     color: #2c3e50;
     border-bottom: 2px solid #3498db;
     padding-bottom: 10px;
 }
 
-#your-goals h3, #counterpart-info h3, #ev-analysis h3, #tactics h3 {
+#your-goals h3, #counterpart-info h3, #ev-analysis h3, #tactics h3, #insights h3 {
     margin: 20px 0 10px;
     color: #2c3e50;
 }
@@ -498,6 +498,34 @@ input[type="number"] {
 
 .result-label {
     font-weight: bold;
+}
+
+/* Insights Tab Styling */
+.insight-section {
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 25px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    border-left: 4px solid #3498db;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.insight-section:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+}
+
+.insight-section h3 {
+    color: #2980b9 !important;
+    margin-top: 0 !important;
+    margin-bottom: 15px !important;
+    font-size: 20px;
+}
+
+.insight-section p {
+    font-size: 16px;
+    line-height: 1.6;
 }
 
 /* Responsive adjustments */

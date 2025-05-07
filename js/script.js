@@ -43,7 +43,7 @@ const negotiationScenario = [
         text: "I'm not here to be insulted, Ms. Hastings. My clients' safety is at stake, and I expect a professional response to our serious concerns. Either address our demands appropriately or we'll see you in court.",
         choices: [
             { text: "I apologize for my unprofessional comment. Let's restart this discussion. We acknowledge there may be safety concerns and want to work toward a fair resolution.", nextScene: 10 },
-            { text: "You're right, that was inappropriate. Let's focus on finding a solution. We're prepared to initiate a recall, but we need to discuss reasonable compensation terms.", nextScene: 11 },
+            { text: "You're right, that was inappropriate. Let's focus on finding a solution. First, would you like a beer?", nextScene: 11 },
             { text: "Oh lighten up, Parker. Learn to take a joke. Now, about these ridiculous compensation demands of yours...", nextScene: "failure" }
         ]
     },
@@ -120,11 +120,10 @@ const negotiationScenario = [
     // Scene 11: After inappropriate remark - recovery attempt 2
     {
         speaker: "counterpart",
-        text: "Apology accepted. Now let's discuss those 'reasonable compensation terms' you mentioned. What exactly are you proposing?",
+        text: "Alright then, apology accepted. I'll take a Guiness if you have.",
         choices: [
-            { text: "We propose a $200 million compensation fund with priority for those with documented incidents, plus a full recall with loaners for all affected vehicles.", nextScene: 31 },
-            { text: "We're prepared to offer $225 million, distributed based on verified damages, with an expedited claims process to ensure prompt resolution.", nextScene: 32 },
-            { text: "We'll establish a $250 million fund plus extended warranties for all affected vehicles to demonstrate our long-term commitment to customers.", nextScene: 33 }
+            { text: "Oh great choice, that's my favorite too. I just visited the factory in Dublin last summer!", nextScene: 31 },
+            { text: "Here you go. Hey, how 'bout dem Mets, huh?", nextScene: 32 },
         ]
     },
     // Scene 12: After inappropriate remark - recovery attempt 3
@@ -285,18 +284,18 @@ const negotiationScenario = [
     // Scene 31: $200M recovery offer
     {
         speaker: "counterpart",
-        text: "The $200 million offer is still insufficient for a case of this magnitude. My clients have suffered significant damages and deserve fair compensation for both actual harm and diminished value.",
+        text: "You're kidding! I have an uncle who lives near there. Ah, I'm running out of time, but let's just split the difference? $350M compensation fund and public apology.",
         choices: [
-            { text: "We understand the seriousness of this issue. We can increase our offer to $300 million with full recall, loaners, and a public acknowledgment.", nextScene: "success" },
-            { text: "$200 million is already generous considering how weak your case is. This settlement is a gift, not an obligation. I suggest you take it before we withdraw it.", nextScene: "failure" }
+            { text: "I appreciate that, but I can't do more than $100M. Can we make that work?", nextScene: "success" },
+            { text: "Oh man, I'm so wasted right now. Yeah, sure, let's split down the middle. You ever tried a spit shake before?", nextScene: "failure" }
         ]
     },
     // Scene 32: $225M recovery offer
     {
         speaker: "counterpart",
-        text: "The $225 million proposal with an independent administrator has merit. This structure would ensure fair distribution, but we need to discuss whether the total amount is sufficient.",
+        text: "Oh man, God bless Cohen and his pockets. New York will never be the same with Soto in town. You seem like a good guy, let's just make something happen here.",
         choices: [
-            { text: "We can increase the total to $275 million while maintaining the independent administration and expedited process.", nextScene: "success" }
+            { text: "I'm with ya. Alright, $90M plus public apology, if you agree to lay off of Payne. Cool?", nextScene: "success" }
         ]
     },
     // Scene 33: $250M with extended warranties
